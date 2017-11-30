@@ -1,0 +1,45 @@
+# Server config
+server:
+  port: ${PORT:8765}
+
+logging:
+  level:
+    ROOT: INFO
+    org.springframework.web: DEBUG
+
+info:
+  component: API Gateway
+
+# Spring config
+spring:
+  application:
+    name: api-gateway
+
+# Eureka config
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${DISCOVERY_URL:http://localhost:8761}/eureka/
+    registerWithEureka: false
+
+# Ribbon config
+ribbon:
+  eureka:
+    enabled: true
+
+# Zuul config
+zuul:
+  prefix: /api
+  routes:
+    articles:
+      path: /articles/**
+      serviceId: article-service
+    authors:
+      path: /authors/**
+      serviceId: author-service
+
+endpoints:
+  routes:
+    sensitive: false
+  trace:
+    sensitive: false

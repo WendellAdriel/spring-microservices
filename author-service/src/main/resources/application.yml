@@ -1,0 +1,26 @@
+# Server config
+server:
+  port: ${PORT:8081}
+
+# Spring config
+spring:
+  application:
+    name: author-service
+  logging:
+    level:
+      org.springframework: WARN
+      org.hibernate: WARN
+
+# Eureka config
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${DISCOVERY_URL:http://localhost:8761}/eureka/
+  instance:
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
+
+# Ribbon config
+ribbon:
+  eureka:
+    enabled: true
