@@ -8,17 +8,9 @@ services:
       dockerfile: Dockerfile
     ports:
       - 8761:8761
+    environment:
+      - DISCOVERY_URL=http://discovery:8761
 
-  # API GATEWAY
-  gateway:
-    build:
-      context: ./api-gateway
-      dockerfile: Dockerfile
-    ports:
-      - 8765:8765
-    depends_on:
-      - discovery
-  
   # SERVICES
   articles:
     build:
@@ -26,6 +18,10 @@ services:
       dockerfile: Dockerfile
     ports:
       - 8080:8080
+    environment:
+      - DISCOVERY_URL=http://discovery:8761
+    links:
+      - discovery
     depends_on:
       - discovery
 
@@ -35,6 +31,10 @@ services:
       dockerfile: Dockerfile
     ports:
       - 9080:8080
+    environment:
+      - DISCOVERY_URL=http://discovery:8761
+    links:
+      - discovery
     depends_on:
       - discovery
 
@@ -44,6 +44,10 @@ services:
       dockerfile: Dockerfile
     ports:
       - 8081:8081
+    environment:
+      - DISCOVERY_URL=http://discovery:8761
+    links:
+      - discovery
     depends_on:
       - discovery
 
@@ -53,5 +57,27 @@ services:
       dockerfile: Dockerfile
     ports:
       - 9081:8081
+    environment:
+      - DISCOVERY_URL=http://discovery:8761
+    links:
+      - discovery
+    depends_on:
+      - discovery
+
+  # API GATEWAY
+  gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - 8765:8765
+    environment:
+      - DISCOVERY_URL=http://discovery:8761
+    links:
+      - discovery
+      - authors
+      - authors_two
+      - articles
+      - articles_two
     depends_on:
       - discovery
